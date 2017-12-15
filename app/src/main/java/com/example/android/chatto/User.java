@@ -2,9 +2,11 @@ package com.example.android.chatto;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,6 +59,14 @@ public class User extends AppCompatActivity {
 
         RequestQueue rQueue = Volley.newRequestQueue(User.this);
         rQueue.add(request);
+
+        usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserDetails.chatWith = al.get(position);
+                startActivity(new Intent(User.this, Chat.class));
+            }
+        });
 
     }
 
