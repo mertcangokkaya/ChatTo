@@ -1,5 +1,6 @@
 package com.example.android.chatto;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,39 +17,37 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.firebase.client.Firebase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+public class Login extends AppCompatActivity {
 
-public class  Register extends AppCompatActivity {
     EditText username, password;
-    Button registerButton;
+    Button loginButton;
     String user, pass;
-    TextView login;
+    TextView register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        Firebase.setAndroidContext(this);
+        setContentView(R.layout.activity_login);
 
-        registerButton = findViewById(R.id.registerButton);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
+        loginButton = findViewById(R.id.loginButton);
+        register = findViewById(R.id.register);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Register.this, Login.class));
+                startActivity(new Intent(Login.this, Register.class));
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 user = username.getText().toString();
                 pass = password.getText().toString();
 
@@ -58,41 +57,31 @@ public class  Register extends AppCompatActivity {
                 else if(pass.equals("")){
                     password.setError("boş bırakılamaz");
                 }
-                else if(!user.matches("[A-Za-z0-9]+")){
-                    username.setError("sadece alfabe ya da numara");
-                }
-                else if(user.length()<5){
-                    username.setError("en az 5 karakter uzunluğunda olmalı");
-                }
-                else if(pass.length()<5){
-                    password.setError("en az 5 karakter uzunluğunda olmalı");
-                }
-                else{final ProgressDialog pd = new ProgressDialog(Register.this);
-                    pd.setMessage("Yükleniyor...");
-                    pd.show();
-
+                else{
                     String url = "https://chatto-f30aa.firebaseio.com/users.json";
+                    final ProgressDialog pd = new ProgressDialog(Login.this);
+                    pd.setMessage("Loading...");
+                    pd.show();
 
                     StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
                         @Override
                         public void onResponse(String s) {
-                            Firebase reference = new Firebase("https://chatto-f30aa.firebaseio.com/users");
-
-                            if(s.equals("null")) {
-                                reference.child(user).child("password").setValue(pass);
-                                Toast.makeText(Register.this, "Kayıt başarılı", Toast.LENGTH_LONG).show();
+                            if(s.equals("null")){
+                                Toast.makeText(Login.this, "kullanıcı bulunamadı", Toast.LENGTH_LONG).show();
                             }
-                            else {
+                            else{
                                 try {
                                     JSONObject obj = new JSONObject(s);
 
-                                    if (!obj.has(user)) {
-                                        reference.child(user).child("password").setValue(pass);
-                                        Toast.makeText(Register.this, "Kayıt başarılı", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(Register.this, "Lütfen başka bir kullanıcı adı giriniz", Toast.LENGTH_LONG).show();
+                                    if(!obj.has(user)){
+                                        Toast.makeText(Login.this, "kullanıcı bulunamadı", Toast.LENGTH_LONG).show();
                                     }
-
+                                    else if(obj.getJSONObject(user).getString("password").equals(pass)){
+                                        Toast.makeText(Login.this, "giriş başarılı", Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+                                        Toast.makeText(Login.this, "yanlış şifre", Toast.LENGTH_LONG).show();
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -100,24 +89,19 @@ public class  Register extends AppCompatActivity {
 
                             pd.dismiss();
                         }
-
                     },new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            System.out.println("" + volleyError );
+                            System.out.println("" + volleyError);
                             pd.dismiss();
                         }
                     });
 
-                    RequestQueue rQueue = Volley.newRequestQueue(Register.this);
+                    RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                     rQueue.add(request);
                 }
 
             }
         });
-
-
-
-
     }
 }
