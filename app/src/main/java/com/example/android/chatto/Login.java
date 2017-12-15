@@ -77,7 +77,9 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, "kullanıcı bulunamadı", Toast.LENGTH_LONG).show();
                                     }
                                     else if(obj.getJSONObject(user).getString("password").equals(pass)){
-                                        Toast.makeText(Login.this, "giriş başarılı", Toast.LENGTH_LONG).show();
+                                        UserDetails.username = user;
+                                        UserDetails.password = pass;
+                                        startActivity(new Intent(Login.this, User.class));
                                     }
                                     else {
                                         Toast.makeText(Login.this, "yanlış şifre", Toast.LENGTH_LONG).show();
