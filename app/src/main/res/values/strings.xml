@@ -10,5 +10,6 @@
     <string name="click_to_login">Giriş ekranına dönem için tıklayın</string>
     <string name="no_users">Kullanıcı bulunamadı</string>
     <string name="write_a_message">Mesaj girin</string>
+    <string name="sign_out">Çıkış</string>
 
 </resources>

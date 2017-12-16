@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +34,27 @@ public class User extends AppCompatActivity {
     ArrayList<String> al = new ArrayList<>();
     int totalUsers = 0;
     ProgressDialog pd;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.users_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_signout:
+                signOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +95,8 @@ public class User extends AppCompatActivity {
 
     }
 
+
+
     public void listUsers(String s){
         try {
             JSONObject obj = new JSONObject(s);
@@ -102,5 +129,33 @@ public class User extends AppCompatActivity {
         }
 
         pd.dismiss();
+    }
+
+    private void signOut() {
+        final ProgressDialog pd = new ProgressDialog(User.this);
+        pd.setMessage("Yükleniyor...");
+        pd.show();
+
+        String url = "https://chatto-f30aa.firebaseio.com/users.json";
+
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String s) {
+                Firebase reference = new Firebase("https://chatto-f30aa.firebaseio.com/users");
+
+                reference.child(UserDetails.username).child("statue").setValue(0);
+                startActivity(new Intent(User.this, Login.class));
+
+          }
+
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println("" + volleyError );
+                pd.dismiss();
+            }
+        });
+        RequestQueue rQueue = Volley.newRequestQueue(User.this);
+        rQueue.add(request);
     }
 }

@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +67,8 @@ public class Login extends AppCompatActivity {
                     StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
                         @Override
                         public void onResponse(String s) {
+                            Firebase reference = new Firebase("https://chatto-f30aa.firebaseio.com/users");
+
                             if(s.equals("null")){
                                 Toast.makeText(Login.this, "kullanıcı bulunamadı", Toast.LENGTH_LONG).show();
                             }
@@ -79,6 +82,9 @@ public class Login extends AppCompatActivity {
                                     else if(obj.getJSONObject(user).getString("password").equals(pass)){
                                         UserDetails.username = user;
                                         UserDetails.password = pass;
+
+                                        reference.child(user).child("statue").setValue(1);
+
                                         startActivity(new Intent(Login.this, User.class));
                                     }
                                     else {
