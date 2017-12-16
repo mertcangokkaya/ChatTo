@@ -99,17 +99,19 @@ public class Chat extends AppCompatActivity {
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(Chat.this);
         textView.setText(message);
-        textView.setTextSize(15.0f);
+        textView.setTextSize(18.0f);
 
         if(type == 1) {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(20, 20, 40, 10);
+            lp.setMargins(300, 10, 10, 10);
+            lp.gravity = Gravity.END;
             textView.setLayoutParams(lp);
             textView.setBackgroundResource(R.drawable.rounded_corner1);
         }
         else{
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(20, 20, 0, 10);
+            lp.setMargins(10, 10, 300, 10);
+            lp.gravity = Gravity.START;
             textView.setLayoutParams(lp);
             textView.setBackgroundResource(R.drawable.rounded_corner2);
         }
