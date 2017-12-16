@@ -17,7 +17,12 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Chat extends AppCompatActivity {
@@ -44,7 +49,13 @@ public class Chat extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageText = messageArea.getText().toString();
+
+                DateFormat df = new SimpleDateFormat("HH:mm", Locale.ROOT);
+                Date today = Calendar.getInstance().getTime();
+                TextView dateText = new TextView(Chat.this);
+
+                String messageText = messageArea.getText().toString()+ "\n(" + df.format(today) + ")";
+
 
                 if(!messageText.equals("")){
                     Map<String, String> map = new HashMap<>();
@@ -99,13 +110,17 @@ public class Chat extends AppCompatActivity {
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(Chat.this);
         textView.setText(message);
-        textView.setTextSize(18.0f);
+        textView.setTextSize(17.0f);
+
+
+
 
         if(type == 1) {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.setMargins(300, 10, 10, 10);
             lp.gravity = Gravity.END;
             textView.setLayoutParams(lp);
+
             textView.setBackgroundResource(R.drawable.rounded_corner1);
         }
         else{
