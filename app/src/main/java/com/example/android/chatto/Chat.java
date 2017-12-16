@@ -3,6 +3,7 @@ package com.example.android.chatto;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -64,10 +65,10 @@ public class Chat extends AppCompatActivity {
                 String userName = map.get("user").toString();
 
                 if(userName.equals(UserDetails.username)){
-                    addMessageBox("Sen:-\n" + message, 1);
+                    addMessageBox("Sen:\n" + message, 1);
                 }
                 else{
-                    addMessageBox(UserDetails.chatWith + ":-\n" + message, 2);
+                    addMessageBox(UserDetails.chatWith + ":\n" + message, 2);
                 }
             }
 
@@ -93,17 +94,23 @@ public class Chat extends AppCompatActivity {
         });
     }
 
+
+
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(Chat.this);
         textView.setText(message);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 0, 0, 10);
-        textView.setLayoutParams(lp);
+        textView.setTextSize(15.0f);
 
         if(type == 1) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(20, 20, 40, 10);
+            textView.setLayoutParams(lp);
             textView.setBackgroundResource(R.drawable.rounded_corner1);
         }
         else{
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(20, 20, 0, 10);
+            textView.setLayoutParams(lp);
             textView.setBackgroundResource(R.drawable.rounded_corner2);
         }
 
