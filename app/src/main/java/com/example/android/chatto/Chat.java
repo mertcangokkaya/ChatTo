@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +37,8 @@ public class Chat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+
 
         layout = findViewById(R.id.layout1);
         sendButton = findViewById(R.id.sendButton);
@@ -76,10 +79,10 @@ public class Chat extends AppCompatActivity {
                 String userName = map.get("user").toString();
 
                 if(userName.equals(UserDetails.username)){
-                    addMessageBox("Sen:\n" + message, 1);
+                    addMessageBox(  message, 1);
                 }
                 else{
-                    addMessageBox(UserDetails.chatWith + ":\n" + message, 2);
+                    addMessageBox( message, 2);
                 }
             }
 
@@ -110,7 +113,7 @@ public class Chat extends AppCompatActivity {
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(Chat.this);
         textView.setText(message);
-        textView.setTextSize(17.0f);
+        textView.setTextSize(15.0f);
 
 
 

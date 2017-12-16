@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,9 +33,13 @@ import java.util.Iterator;
 public class User extends AppCompatActivity {
     ListView usersList;
     TextView noUsersText;
-    ArrayList<String> al = new ArrayList<>();
+    ArrayList<String> al_user = new ArrayList<>();
+    ArrayList<String> al_statue = new ArrayList<>();
     int totalUsers = 0;
     ProgressDialog pd;
+    int index=0;
+    int sayac = 0;
+    String key;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +94,7 @@ public class User extends AppCompatActivity {
         usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith = al.get(position);
+                UserDetails.chatWith = al_user.get(position);
                 startActivity(new Intent(User.this, Chat.class));
             }
         });
@@ -99,22 +105,24 @@ public class User extends AppCompatActivity {
 
     public void listUsers(String s){
         try {
-            JSONObject obj = new JSONObject(s);
 
+            JSONObject obj = new JSONObject(s);
             Iterator i = obj.keys();
-            String key;
 
             while(i.hasNext()){
                 key = i.next().toString();
 
+
                 if(!key.equals(UserDetails.username)) {
-                    al.add(key);
+                    al_user.add(key);
+
                 }
 
                 totalUsers++;
             }
 
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -125,7 +133,7 @@ public class User extends AppCompatActivity {
         else{
             noUsersText.setVisibility(View.GONE);
             usersList.setVisibility(View.VISIBLE);
-            usersList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, al));
+            usersList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, al_user));
         }
 
         pd.dismiss();

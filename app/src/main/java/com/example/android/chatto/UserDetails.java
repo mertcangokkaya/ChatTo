@@ -4,4 +4,5 @@ class UserDetails {
     static String username = "";
     static String password = "";
     static String chatWith = "";
+    static int isOnline = 0;
 }
