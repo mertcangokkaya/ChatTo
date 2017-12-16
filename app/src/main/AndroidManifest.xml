@@ -29,7 +29,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register"/>
-        <activity android:name=".User"/>
+        <activity android:name=".User"
+            android:label="@string/users"/>
+
         <activity android:name=".Chat"/>
     </application>
 

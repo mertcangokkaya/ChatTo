@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+>
+
+
+    <ImageView
+        android:contentDescription="@null"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ChatTo_Icon03_Fixed" />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,16 +42,18 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#e29715"
         android:text="@string/login"
         android:id="@+id/loginButton"
         android:layout_marginBottom="20dp"/>
 
     <TextView
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/click_to_register"
-        android:textSize="20sp"
         android:gravity="center"
-        android:id="@+id/register"/>
+        android:text="@string/click_to_register"
+        android:textSize="20sp" />
+
 
 </LinearLayout>
