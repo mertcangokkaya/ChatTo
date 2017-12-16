@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,16 @@ public class User extends AppCompatActivity {
     int index=0;
     int sayac = 0;
     String key;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+            Toast.makeText(getApplicationContext(), "çıkış yapın",
+                    Toast.LENGTH_LONG).show();
+
+        return false;
+        // Disable back button..............
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
