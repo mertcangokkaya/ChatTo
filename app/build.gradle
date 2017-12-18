@@ -1,14 +1,23 @@
+plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin' version '0.8.0'
+}
 apply plugin: 'com.android.application'
+
 
 android {
     compileSdkVersion 26
     defaultConfig {
+        manifestPlaceholders = [onesignal_app_id: "628ccc70-6b4d-4fda-ba00-2c171a186e82",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
         applicationId "com.example.android.chatto"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
     }
     buildTypes {
         release {
@@ -19,17 +28,38 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'UNIQUE_FIREBASE_ROOT_URL', UniqueFirebaseRoolUrl
     }
+
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.google.firebase:firebase-messaging:11.6.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.firebase:firebase-client-android:2.5.2'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:design:26.1.0'
+    compile 'com.pusher:pusher-java-client:1.5.0'
+    compile 'com.onesignal:OneSignal:3.7.1'
+    compile 'com.google.firebase:firebase-auth:11.6.2'
+    compile 'com.google.firebase:firebase-core:11.6.2'
+    compile 'com.google.firebase:firebase-database:11.6.2'
 
 }
+
+
+
+
+repositories {
+    maven { url 'https://maven.google.com' }
+
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+

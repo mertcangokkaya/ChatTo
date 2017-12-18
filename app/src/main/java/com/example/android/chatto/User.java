@@ -2,6 +2,7 @@ package com.example.android.chatto;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,19 +39,19 @@ public class User extends AppCompatActivity {
     ArrayList<String> al_statue = new ArrayList<>();
     int totalUsers = 0;
     ProgressDialog pd;
-    int index=0;
     int sayac = 0;
     String key;
+    Context context=this;
 
+    //Geri tuşuna basıldığında programı kapatır
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK)
-            Toast.makeText(getApplicationContext(), "çıkış yapın",
-                    Toast.LENGTH_LONG).show();
-
-        return false;
-        // Disable back button..............
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,6 +79,8 @@ public class User extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
+
+
         usersList = findViewById(R.id.usersList);
         noUsersText = findViewById(R.id.noUsersText);
 
@@ -90,7 +93,7 @@ public class User extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
             @Override
             public void onResponse(String s) {
-                listUsers(s);
+                 listUsers(s);
             }
         },new Response.ErrorListener(){
             @Override
@@ -154,7 +157,7 @@ public class User extends AppCompatActivity {
         final ProgressDialog pd = new ProgressDialog(User.this);
         pd.setMessage("Yükleniyor...");
         pd.show();
-
+        SaveSharedPreference.clearUserName(context);
         String url = "https://chatto-f30aa.firebaseio.com/users.json";
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){

@@ -43,11 +43,23 @@ public class Chat extends AppCompatActivity {
         layout = findViewById(R.id.layout1);
         sendButton = findViewById(R.id.sendButton);
         messageArea = findViewById(R.id.messageArea);
-        scrollView = findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(this);
         reference1 = new Firebase("https://chatto-f30aa.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
         reference2 = new Firebase("https://chatto-f30aa.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
+
+        messageArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                };
+                scrollView.post(runnable);
+            }
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +118,14 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+
+        final ScrollView scrollview = findViewById(R.id.scrollView);
+        scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollview.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
 
@@ -135,6 +155,12 @@ public class Chat extends AppCompatActivity {
         }
 
         layout.addView(textView);
-        scrollView.fullScroll(View.FOCUS_DOWN);
+        Runnable runnable=new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        };
+        scrollView.post(runnable);
     }
 }

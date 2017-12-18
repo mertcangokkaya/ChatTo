@@ -9,9 +9,9 @@
 
     <ImageView
         android:contentDescription="@null"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/chat_to_icon04" />
+        android:src="@drawable/chat_to_icon03_fixed" />
 
     <TextView
         android:layout_width="match_parent"

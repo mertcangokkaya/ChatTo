@@ -11,7 +11,7 @@
         android:contentDescription="@null"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/chat_to_icon03_fixed" />
+        android:src="@drawable/chat_to_icon04" />
 
     <TextView
         android:layout_width="match_parent"
@@ -46,6 +46,7 @@
         android:text="@string/login"
         android:id="@+id/loginButton"
         android:layout_marginBottom="20dp"/>
+
 
     <TextView
         android:id="@+id/register"
