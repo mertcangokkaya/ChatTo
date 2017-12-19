@@ -29,6 +29,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.onesignal.OSSubscriptionObserver;
+import com.onesignal.OSSubscriptionStateChanges;
+import com.onesignal.OneSignal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +60,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -226,6 +230,8 @@ public class Login extends AppCompatActivity {
 
 
     }
+
+
 
 
 }

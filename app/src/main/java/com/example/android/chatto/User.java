@@ -4,8 +4,12 @@ package com.example.android.chatto;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,13 +28,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.onesignal.OneSignal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
+
 
 public class User extends AppCompatActivity {
     ListView usersList;
@@ -42,6 +53,8 @@ public class User extends AppCompatActivity {
     int sayac = 0;
     String key;
     Context context=this;
+    private static final String TAG = "Login";
+    String OS_userId;
 
     //Geri tuşuna basıldığında programı kapatır
     @Override
@@ -51,6 +64,7 @@ public class User extends AppCompatActivity {
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
     }
+
 
 
     @Override
@@ -78,6 +92,21 @@ public class User extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+
+        OneSignal.sendTag("user_name", UserDetails.username);
+
+
+        /*
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d(TAG, "Key: " + key + " Value: " + value);
+            }
+        }
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        System.out.println("========== PUSH ID ========" + token);
+        Toast.makeText(User.this, "PUSH ID :::" + token,         Toast.LENGTH_SHORT).show();*/
 
 
 
@@ -112,6 +141,8 @@ public class User extends AppCompatActivity {
                 startActivity(new Intent(User.this, Chat.class));
             }
         });
+
+
 
     }
 
@@ -153,6 +184,17 @@ public class User extends AppCompatActivity {
         pd.dismiss();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (pd != null) {
+            pd.dismiss();
+            pd = null;
+        }
+    }
+
+
+
     private void signOut() {
         final ProgressDialog pd = new ProgressDialog(User.this);
         pd.setMessage("Yükleniyor...");
@@ -179,5 +221,11 @@ public class User extends AppCompatActivity {
         });
         RequestQueue rQueue = Volley.newRequestQueue(User.this);
         rQueue.add(request);
+
+
+
+
+
+
     }
 }

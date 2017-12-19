@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.onesignal.OneSignal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class  Register extends AppCompatActivity {
     Button registerButton;
     String user, pass;
     TextView login;
-
+    String OS_userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,13 @@ public class  Register extends AppCompatActivity {
         login = findViewById(R.id.login);
         final int isOnline = 0;
 
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable(String userId, String registrationId) {
+                OS_userId = userId ;
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +59,8 @@ public class  Register extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 user = username.getText().toString();
                 pass = password.getText().toString();
 
@@ -93,6 +103,7 @@ public class  Register extends AppCompatActivity {
                                         reference.child(user).child("password").setValue(pass);
                                         Toast.makeText(Register.this, "Kayıt başarılı", Toast.LENGTH_LONG).show();
                                         reference.child(user).child("statue").setValue(0);
+                                        reference.child(user).child("os_userid").setValue(OS_userId);
                                     } else {
                                         Toast.makeText(Register.this, "Lütfen başka bir kullanıcı adı giriniz", Toast.LENGTH_LONG).show();
                                     }
