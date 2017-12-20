@@ -28,6 +28,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.firebase.client.GenericTypeIndicator;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.onesignal.OneSignal;
 
@@ -40,6 +47,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -54,7 +62,8 @@ public class User extends AppCompatActivity {
     String key;
     Context context=this;
     private static final String TAG = "Login";
-    String OS_userId;
+    String user_name;
+    DatabaseReference rootRef,demoRef;
 
     //Geri tuşuna basıldığında programı kapatır
     @Override
@@ -95,19 +104,9 @@ public class User extends AppCompatActivity {
 
         OneSignal.sendTag("user_name", UserDetails.username);
 
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
-        /*
-        if (getIntent().getExtras() != null) {
-            for (String key : getIntent().getExtras().keySet()) {
-                Object value = getIntent().getExtras().get(key);
-                Log.d(TAG, "Key: " + key + " Value: " + value);
-            }
-        }
-
-        String token = FirebaseInstanceId.getInstance().getToken();
-        System.out.println("========== PUSH ID ========" + token);
-        Toast.makeText(User.this, "PUSH ID :::" + token,         Toast.LENGTH_SHORT).show();*/
-
+        demoRef = rootRef.child("users");
 
 
         usersList = findViewById(R.id.usersList);
@@ -151,19 +150,22 @@ public class User extends AppCompatActivity {
     public void listUsers(String s){
         try {
 
+
+
+
             JSONObject obj = new JSONObject(s);
             Iterator i = obj.keys();
 
             while(i.hasNext()){
                 key = i.next().toString();
 
+                        if(!key.equals(UserDetails.username)) {
+                            al_user.add(key);
 
-                if(!key.equals(UserDetails.username)) {
-                    al_user.add(key);
+                        }
 
-                }
+                        totalUsers++;
 
-                totalUsers++;
             }
 
         }

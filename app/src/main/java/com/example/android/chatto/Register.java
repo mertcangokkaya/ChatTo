@@ -40,7 +40,7 @@ public class  Register extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        final int isOnline = 0;
+        final String isOnline = "0";
 
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override
@@ -102,7 +102,7 @@ public class  Register extends AppCompatActivity {
                                     if (!obj.has(user)) {
                                         reference.child(user).child("password").setValue(pass);
                                         Toast.makeText(Register.this, "Kayıt başarılı", Toast.LENGTH_LONG).show();
-                                        reference.child(user).child("statue").setValue(0);
+                                        reference.child(user).child("statue").setValue("0");
                                         reference.child(user).child("os_userid").setValue(OS_userId);
                                     } else {
                                         Toast.makeText(Register.this, "Lütfen başka bir kullanıcı adı giriniz", Toast.LENGTH_LONG).show();

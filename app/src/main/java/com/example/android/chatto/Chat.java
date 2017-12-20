@@ -132,7 +132,7 @@ public class Chat extends AppCompatActivity {
 
 
 
-                demoRef.child(user).child("os_userid").addListenerForSingleValueEvent(new ValueEventListener() {
+                demoRef.child(chat_with).child("os_userid").addListenerForSingleValueEvent(new ValueEventListener() {
 
 
                     @Override

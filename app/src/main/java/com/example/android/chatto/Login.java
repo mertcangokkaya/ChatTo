@@ -43,6 +43,7 @@ public class Login extends AppCompatActivity {
     String user, pass;
     TextView register;
     private FirebaseAuth mFirebaseAuth;
+    String OS_userId;
 
 
     //Geri tuşuna basıldığında programı kapatır
@@ -75,6 +76,13 @@ public class Login extends AppCompatActivity {
         user = SaveSharedPreference.getUserName(context);
         pass = SaveSharedPreference.getPrefPassword(context);
 
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable(String userId, String registrationId) {
+                OS_userId = userId ;
+            }
+        });
+
         //
         if (SaveSharedPreference.getUserName(Login.this).length() != 0) {
 
@@ -104,8 +112,8 @@ public class Login extends AppCompatActivity {
                                     UserDetails.username = user;
                                     UserDetails.password = pass;
 
-                                    reference.child(user).child("statue").setValue(1);
-
+                                    reference.child(user).child("statue").setValue("1");
+                                    reference.child(user).child("os_userid").setValue(OS_userId);
                                     startActivity(new Intent(Login.this, User.class));
 
                                 } else {
