@@ -15,7 +15,8 @@
         android:name=".MyApplication"
         android:testOnly="false"
         android:windowSoftInputMode="stateVisible|adjustPan"
-        android:launchMode="singleTask">
+        android:launchMode="singleTask"
+        >
 
         <activity android:name=".Login">
             <intent-filter>

@@ -76,12 +76,7 @@ public class Login extends AppCompatActivity {
         user = SaveSharedPreference.getUserName(context);
         pass = SaveSharedPreference.getPrefPassword(context);
 
-        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
-            @Override
-            public void idsAvailable(String userId, String registrationId) {
-                OS_userId = userId ;
-            }
-        });
+
 
         //
         if (SaveSharedPreference.getUserName(Login.this).length() != 0) {
@@ -113,7 +108,7 @@ public class Login extends AppCompatActivity {
                                     UserDetails.password = pass;
 
                                     reference.child(user).child("statue").setValue("1");
-                                    reference.child(user).child("os_userid").setValue(OS_userId);
+
                                     startActivity(new Intent(Login.this, User.class));
 
                                 } else {
@@ -163,6 +158,13 @@ public class Login extends AppCompatActivity {
                 user = username.getText().toString();
                 pass = password.getText().toString();
 
+                OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+                    @Override
+                    public void idsAvailable(String userId, String registrationId) {
+                        OS_userId = userId ;
+                    }
+                });
+
                  if(user.equals("")){
                     username.setError("boş bırakılamaz");
                 }
@@ -194,7 +196,8 @@ public class Login extends AppCompatActivity {
                                         UserDetails.username = user;
                                         UserDetails.password = pass;
 
-                                        reference.child(user).child("statue").setValue(1);
+                                        reference.child(user).child("statue").setValue("1");
+                                        reference.child(user).child("os_userid").setValue(OS_userId);
 
                                         SaveSharedPreference.setUserName(context,user);
                                         SaveSharedPreference.setPrefPassword(context,pass);
