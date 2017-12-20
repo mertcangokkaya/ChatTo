@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 
 
 android {
+    aaptOptions { cruncherEnabled = false }
     compileSdkVersion 26
     defaultConfig {
         manifestPlaceholders = [onesignal_app_id: "628ccc70-6b4d-4fda-ba00-2c171a186e82",

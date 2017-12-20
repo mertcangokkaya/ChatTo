@@ -208,7 +208,7 @@ public class User extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 Firebase reference = new Firebase("https://chatto-f30aa.firebaseio.com/users");
-
+                reference.child(UserDetails.username).child("os_userid").setValue("0");
                 reference.child(UserDetails.username).child("statue").setValue("0");
                 startActivity(new Intent(User.this, Login.class));
 
