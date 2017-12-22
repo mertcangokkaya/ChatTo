@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.chatto">
+    package="com.chatt.android.chatto">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,7 +16,9 @@
         android:testOnly="false"
         android:windowSoftInputMode="stateVisible|adjustPan"
         android:launchMode="singleTask"
+
         >
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
 
         <activity android:name=".Login">
             <intent-filter>
@@ -34,9 +36,13 @@
         </activity>
         <activity android:name=".Register"/>
         <activity android:name=".User"
-            android:label="@string/users"/>
+            android:label="@string/online_users"/>
 
         <activity android:name=".Chat"/>
+        <activity android:name=".AllUsers"
+            android:label="@string/all_users"/>
+        <activity android:name=".FavUsers"
+            android:label="@string/fav_list_text"/>
         <!-- [START firebase_service] -->
         <service
             android:name=".MyFirebaseMessagingService"

@@ -2,11 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_chat"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/chat_background"
     android:orientation="vertical"
     android:layout_gravity="bottom"
     android:focusable="true"
     android:focusableInTouchMode="true">
+
+    <Button
+        android:id="@+id/bbutton"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:onClick="didTapButton"
+        android:background="#FFA400"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"

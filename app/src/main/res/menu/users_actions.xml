@@ -1,12 +1,29 @@
 <menu xmlns:android=
     "http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=
-        "com.example.android.chatto.User">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=
+    "com.chatt.android.chatto.User">
+
     <item
-        android:id="@+id/action_signout"
-        android:orderInCategory="100"
-        android:title="@string/sign_out"
-        app:showAsAction="never" />
+        android:id="@+id/all_users_action"
+        android:icon="@mipmap/all_users"
+        android:title="@string/all_users_text"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="0"/>
+
+    <item
+        android:id="@+id/fav_list_action"
+        android:icon="@mipmap/fav_users"
+        android:title="@string/fav_list_text"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="1"/>
+
+
+
+<item
+    android:id="@+id/action_signout"
+    android:orderInCategory="100"
+    android:title="@string/sign_out"
+    app:showAsAction="never" />
 </menu>

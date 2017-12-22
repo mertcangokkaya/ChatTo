@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ChatTo</string>
-    <string name="users">Kullanıcılar</string>
+    <string name="online_users">Çevrimiçi</string>
+    <string name="all_users">Tüm Kullanıcılar</string>
+    <string name="fav_list_text">Favori Kişiler</string>
     <string name="login">Giriş</string>
     <string name="username">Kullanıcı adı</string>
     <string name="password">Şifre</string>
@@ -12,5 +14,7 @@
     <string name="no_users">Kullanıcı bulunamadı</string>
     <string name="write_a_message">Mesaj girin</string>
     <string name="sign_out">Çıkış</string>
+    <string name="all_users_text">Çevrimdışı kullanıcılar</string>
+    <string name="fav_text">favoriye al</string>
 
 </resources>
